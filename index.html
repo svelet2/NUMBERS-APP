@@ -14,10 +14,14 @@
         <label id="sum"></label>
         </section>
         <script>
-            function add() {
-                let operand1 = document.getElementById("operand1").value;
-                let operand2 = document.getElementById("operand2").value;
-                let sum = Number(operand1.value) + Number(operand2.value);
+            async function add() {
+                const operand1 = document.getElementById("operand1");
+                const operand2 = document.getElementById("operand2");
+                let n = operand1.value;
+                let m = operand2.value;
+                const response = await fetch("http://localhost:3000/add/" + n + "/" + m);
+                const sum = await response.json();
+                // let sum = Number(operand1.value) + Number(operand2.value);
                 document.getElementById("sum").innerText = sum;
             }
         </script>
