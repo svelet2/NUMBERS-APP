@@ -19,6 +19,8 @@
          </style>
     </head>
     <body>
+    <div class="row" id="login">
+    </div>
         <div class="row">
             <div class="column">          
                <section>
@@ -56,14 +58,16 @@
                 </section>           
             </div> 
         </div>    
-
+        <script src="configuration.js"></script>
         <script>
+            let hosts = configuration.hosts;
+            displayLogin();
+
             async function calculate() {
                 const operand1 = parseFloat(document.getElementById("operand1").value);
                 const operand2 = parseFloat(document.getElementById("operand2").value);
                 const operator = document.getElementById("operator").value;
                 let result;
-                //
 
                 switch(operator) {
                     case "+":
@@ -93,8 +97,10 @@
 
         async function isPrime() {
             const numberToTest = document.getElementById("numberToTest");            
-            let n = numberToTest.value;            
-            const response = await fetch("https://primes-service-svelet2.onrender.com/primes/" + n);
+            let n = numberToTest.value;      
+            const headers = {"Authorization": "Bearer " + localStorage.getItem("token")};
+            const response = await fetch(`${hosts.primes_service}/primes/${n}`, {headers});
+            // const response = await fetch("https://primes-service-svelet2.onrender.com/primes/" + n);
             const result = await response.json();
             document.getElementById("primeCheckResult").innerText = result;
         }
